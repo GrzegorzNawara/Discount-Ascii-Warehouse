@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+  
+   <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="bootstrap.min.css">
+
+  
+<style>
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+.face-card {
+  margin-bottom: 3em;
+  width: 220px;
+}
+
+.face-card:hover {
+  background-image: url('images/face-bg.png');
+  background-repeat: no-repeat;
+  background-position: 50% 70%;
+}
+
+.my-ad-card {
+  margin-bottom: 3em;
+  width: 220px;
+}
+
+
+.face-bg { 
+  height: 70px;
+  padding:5px;
+}
+
+.container-fluid {
+  background-color: #ffffff;
+  max-width: 960px;
+}
+
+.dummy {  display: none!important; }
+.hidden {  display: none!important; }
+
+body { background-color: #ffffff; }
+
+</style>
+
+   <title>Discount Ascii Warehouse</title>
+  
+ </head>
+ <body>
+     
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <a class="navbar-brand my-0 mr-md-auto" href="#" title="logo"><img src="images/logo.png"></img></a>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="#">Features</a>
+        <a class="p-2 text-dark" href="#">Support</a>
+        <a class="p-2 text-dark" href="#">Pricing</a>
+      </nav>
+      <a class="p-2 text-dark" href="#">EN</a>
+      <a class="p-2 text-dark" href="#">PL</a>
+      <a class="btn btn-outline-primary" href="#">Sign up</a>
+    </div>
+
+     <div class="container container-fluid mt-0">
+     
+         <div class="py-3 pt-md-5 pb-md-4 mx-auto text-center">
+          <h1 class="display-4">ASCII Faces</h1>
+          <p class="lead text-justify">Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.</p>
+          <p class="lead text-center border pt-2 pb-4 mx-auto" style="max-width:400px;">But first, a word from our sponsors:<br><script>document.write('<img class="ad img-fluid" src="/ad/?r=' + Math.floor(Math.random()*1000) + '"/>');</script></p>
+        </div>
+     
+        
+        <!--  Sorting  -->
+        <div class="text-center mb-4 mr-3">
+          <div id="sorting" class="btn-group btn-group-toggle">
+            <label class="btn btn-sm btn-outline-secondary" onclick="sort(this, 'size')">
+              <input type="radio" name="options" id="option1" >Smallest size
+            </label>
+            <label class="btn btn-sm btn-outline-secondary" onclick="sort(this, 'price')">
+              <input type="radio" name="options" id="option2" >Lowest Price
+            </label>
+               <!-- TODO: Date sorting server-side  
+            <label class="btn btn-sm btn-outline-secondary" onclick="sort(this, 'date')">
+              <input type="radio" name="options" id="option3" >Most recent
+            </label>
+            -->
+            <label class="btn btn-sm btn-outline-secondary" onclick="sort(this, 'id')">
+              <input type="radio" name="options" id="option3" >Id Collector's Club
+            </label>
+          </div>
+        </div>
+        <!--  Sorting  -->
+        
+        
+       <!--  Ad dummy  -->
+       <div id="ad-dummy" class="col-12 col-sm-6 col-md-4 col-lg-3 dummy hidden d-flex justify-content-center">
+          <div class="card box-shadow my-ad-card">
+            <div class="card-header">
+            <h4 class="font-weight-normal text-center">Free</h4>
+          </div>
+          
+          <div class="text-center mb-auto">
+            <img id="ad-image" class="ad img-fluid" src="images/loading.gif"/>
+            <div class="card-text mt-3">A word from our sponsor</div>
+          </div>
+            
+          <div class="card-footer text-muted text-center">Sponsored</div>
+        </div>
+       </div>
+       <!--  Ad dummy  -->
+       
+      
+       <!--  Record dummy  -->
+       <div id="record-dummy" class="col-12 col-sm-6 col-md-4 col-lg-3 dummy hidden d-flex justify-content-center">
+        
+          <div class="card box-shadow face-card">
+        
+            <div class="card-header">
+              <h4 class="font-weight-normal text-center">Only <span id="data-price"></span></h4>
+            </div>
+            
+            <div class="card-block">
+              
+              <div class="card-title face-bg d-flex justify-content-center align-items-end " style="overflow:hidden;"><span id="data-face" class="font-weight-bold text-nowrap" style="font-size:16px">FACE</span></div>
+              
+              <div class="text-center" ><span id="data-size"></span> px</div>
+                
+              <button type="button" class="btn btn-lg btn-block btn-outline-primary my-4 mx-auto" style="width: 75%">Get it now!</button>
+            </div>
+            
+            <div id="data-date" class="card-footer text-muted text-center"></div>
+          </div>
+        </div>
+        <!--  Record dummy  -->
+    
+    
+        <div id="main-product-grid" class="row products">
+        </div>
+        <div id="pre-loader"></div>
+        <div id="loading-message" class="text-center"><img src="images/loading.gif"></img></div>
+        <div id="end-of-catalogue-message" class="text-center" style="display:none">END OF CATALOGUE</div>
+        
+        
+     </div><!-- container -->
+
+        
+
+       <!-- Site footer -->
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 text-center">
+            <img class="mb-2" src="images/logo.png" alt="logo">
+            <small class="d-block mb-3 text-muted">&copy; 2018</small>
+          </div>
+          <div class="col-12 col-md text-center">
+            <h5>Features</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Cool stuff</a></li>
+              <li><a class="text-muted" href="#">Random feature</a></li>
+              <li><a class="text-muted" href="#">Another one</a></li>
+              <li><a class="text-muted" href="#">Last time</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md text-center">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Resource</a></li>
+              <li><a class="text-muted" href="#">Resource name</a></li>
+              <li><a class="text-muted" href="#">Another resource</a></li>
+              <li><a class="text-muted" href="#">Final resource</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md text-center">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Team</a></li>
+              <li><a class="text-muted" href="#">Locations</a></li>
+              <li><a class="text-muted" href="#">Privacy</a></li>
+              <li><a class="text-muted" href="#">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+
+</body>
+  
+<script>
+        
+
+
+const DATA_SET_SEPARATOR="\n";
+const DATA_PAGE_SIZE=24;
+const SHOW_RELATIVE_DATE_IF_CLOSER_THAN_X_DAYS=7;
+const PRE_LOAD_WHEN_CLOSER_THAN_X_TIMES_THE_PAGE_HEIGHT=10;
+const ADD_ADS_AFTER_EVERY_X_PRODUCTS=20;
+
+// Simple lock for reading data
+var loadingDataNow=0;
+
+// End of data marker
+var endOfData=0;
+
+// Actual data page to be read
+var actualPage=0;
+
+// Ads positioning
+var lastAddPosition=0;
+var currentRecordPosition=0;
+var lastAdsId=0;
+
+// Sorting
+actualSorting='price';
+
+// Smoke tests
+console.log(tr('__CHECK_TR__'));
+
+
+
+// ------------------------------------------------------------------------------------------
+// Basic translation solution to work with trados
+// TODO: Read userLang from browser with Gen-US
+var userLang='pl-pl';//window.navigator.userLanguage || window.navigator.language;
+userLang=userLang.substring(0,2);
+
+var multiLang=['en','pl'];
+multiLang['en']=['__CHECK_TR__','Today','Yesterday','days ago'];
+multiLang['pl']=['__TR_PL_OK__','Dziś','Wczoraj','dni temu'];
+
+function tr(word) {
+
+  try {
+  
+    return multiLang[userLang][multiLang['en'].indexOf(word)];
+  } 
+  catch (e) {
+  
+    return word;
+  }
+}
+// Basic translation function
+// ------------------------------------------------------------------------------------------
+
+
+
+// ------------------------------------------------------------------------------------------
+// Grid sorting switch
+function sort(element, by_field) {
+      
+   // Checking the lock
+    if(loadingDataNow==0) {
+
+       // Lock
+      loadingDataNow=1;
+      
+      // Show active sorting
+      var tmp_sorting = document.getElementById("sorting");
+      var tmp_ii;
+      for (tmp_ii = 0; tmp_ii < tmp_sorting.children.length; tmp_ii++) {
+      
+          tmp_sorting.children[tmp_ii].classList.remove("active");
+      }
+      element.classList.add("active");
+      
+      // Set new sorting
+      actualSorting=by_field;
+
+      // Reset data 
+      actualPage=0;
+      lastAddPosition=0;
+      currentRecordPosition=0;
+      lastAdsId=0;
+      endOfData=0;
+      
+      // Destroy resultset
+      var tmp_whole_recordset = document.getElementById("main-product-grid");
+      while (tmp_whole_recordset.firstChild) {
+          tmp_whole_recordset.removeChild(tmp_whole_recordset.firstChild);
+      }
+        
+       
+      // Unlock
+      loadingDataNow=0; 
+      
+      // Load data
+      load_more();
+    }
+}
+// Grid sorting switch
+// ------------------------------------------------------------------------------------------
+
+
+
+// ------------------------------------------------------------------------------------------
+// Data pre-load
+document.body.onload = function() {load_more()};
+window.onscroll = function() {load_more()};
+
+function load_more() {
+      
+  // Check if we need to pre-load 
+  var tmp_scroll_position = (document.body.scrollTop || document.documentElement.scrollTop );
+  var tmp_pre_loader_distance = document.getElementById("pre-loader").offsetTop - tmp_scroll_position;
+  
+  // Checking the lock
+  if(loadingDataNow==0 && endOfData==0) {
+ 
+    if ( tmp_pre_loader_distance < PRE_LOAD_WHEN_CLOSER_THAN_X_TIMES_THE_PAGE_HEIGHT*window.innerHeight ) {
+        
+        // Read next page
+        //console.log('Load more::'+loadingDataNow+':'+actualPage);
+        read_data();
+    }
+  }
+  
+   
+    //Showing preloaded data when visible
+    var tmp_hidden_elements=document.getElementsByClassName("hidden");
+    var tmp_ii;
+    for (tmp_ii = 0; tmp_ii < tmp_hidden_elements.length; tmp_ii++) {
+        
+        if(tmp_hidden_elements[tmp_ii].offsetTop - tmp_scroll_position < window.innerHeight) {
+        
+          tmp_hidden_elements[tmp_ii].classList.remove("hidden");
+        }
+    }
+  
+  
+}
+// Data pre-load
+// ------------------------------------------------------------------------------------------
+
+
+
+// ------------------------------------------------------------------------------------------
+// Main data loader
+function read_data() {
+
+  // Lock
+  loadingDataNow++;
+    
+  // Show loader
+  document.getElementById("loading-message").style="";  
+      
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+  
+    if (this.readyState == 4 && this.status == 200) {
+        
+      // Init before reading recordset
+      endOfData=1;
+
+
+      // Read data recordset
+      var dataSet = this.responseText.split(DATA_SET_SEPARATOR);
+      dataSet.forEach(function a (item, index) {
+          
+        //console.log(dataSet[index]); 
+  
+        var dataRecord=null;
+        if(dataSet[index]!='') {
+                
+          // At least 1 non-empty record exists 
+          endOfData=0;
+          
+          // Read data with values convertion
+          dataRecord = JSON.parse(dataSet[index], convert_data_values );
+          
+          // Update record position (for ads)
+          currentRecordPosition++;
+            
+          //console.log(currentRecordPosition);
+          
+          // Display adds
+          if( currentRecordPosition-lastAddPosition>=ADD_ADS_AFTER_EVERY_X_PRODUCTS ) {
+          
+             // Choose an ad
+             // Make sure there are never twice the same ad
+             var tmp_image_id=Math.floor(Math.random()*1000);
+             if(tmp_image_id==lastAdsId) {
+              
+              tmp_image_id=(tmp_image_id+1)%1000;
+             }
+             lastAdsId=tmp_image_id;
+             
+              // Fill dummy ad
+             document.getElementById("ad-image").src='/ad/?r='+tmp_image_id;
+             var tmp_new_ad = document.getElementById("ad-dummy").cloneNode(true);
+             tmp_new_ad.classList.remove("dummy");
+             tmp_new_ad.classList.add("hidden");
+               
+             // Show ads on first page
+             if(actualPage==0) {
+            
+              tmp_new_ad.classList.remove("hidden");
+            }
+              
+            // Removing ids  
+            var tmp_ii;
+            for (tmp_ii = 0; tmp_ii < tmp_new_ad.children.length; tmp_ii++) {
+              tmp_new_ad.children[tmp_ii].setAttribute("id", null);
+            }  
+              
+              
+            // Put new element on the grid
+            document.getElementById("main-product-grid").appendChild(tmp_new_ad);  
+             
+             
+             lastAddPosition=currentRecordPosition;
+          }
+          
+          
+          // Display data row
+          // Fill dummy record with data
+          // Div elements in record-dummy children provides data field-names
+          // Example: <div id="data-price"></div> // this will load data from "price" field
+          var tmp_data_field;
+          for (tmp_data_field in dataRecord) {
+          
+              if (dataRecord.hasOwnProperty(tmp_data_field)) {
+              
+                  if( document.getElementById('data-'+tmp_data_field) != null ) {
+                  
+                    document.getElementById("data-"+tmp_data_field).innerHTML=dataRecord[tmp_data_field];
+                  }
+              }
+          }
+           
+
+          // Setting face size
+          document.getElementById("data-face").style.fontSize=dataRecord.size+"px";
+          
+          
+          // Create new row with updated element identifiers
+          var tmp_new_record = document.getElementById("record-dummy").cloneNode(true);
+          var tmp_ii;
+          for (tmp_ii = 0; tmp_ii < tmp_new_record.children.length; tmp_ii++) {
+              tmp_new_record.children[tmp_ii].setAttribute("id", dataRecord.id+"-"+tmp_new_record.children[tmp_ii].id);
+          }
+           tmp_new_record.classList.remove("dummy");
+           tmp_new_record.classList.add("hidden");
+             
+          // Show new record during initial loading
+          // Next pages will be shown after scrolling
+          if(actualPage==0) {
+          
+            tmp_new_record.classList.remove("hidden");
+          }
+          
+          // Put new element on the grid
+          document.getElementById("main-product-grid").appendChild(tmp_new_record);  
+          
+        }
+      });
+      // Read data recordset
+      
+      
+      // Hide/show end-of-catalogue-message
+      if(endOfData==1) {
+      
+        document.getElementById("end-of-catalogue-message").style="";    
+      }
+      else {
+      
+        document.getElementById("end-of-catalogue-message").style="display:none";
+      }
+        
+      
+      
+      // Inc actual page for next query
+      actualPage++;
+      
+      // Unlock
+      loadingDataNow--;
+      
+      // Hide loader
+      document.getElementById("loading-message").style="display:none";
+      
+    }
+  };
+  xhttp.open("GET", "api/products?limit="+DATA_PAGE_SIZE+"&skip="+(actualPage*DATA_PAGE_SIZE)+"&sort="+actualSorting, true);
+  xhttp.send();
+}
+// Main data loader
+// ------------------------------------------------------------------------------------------
+
+
+
+// ------------------------------------------------------------------------------------------
+// Converting data for display
+function convert_data_values(key, value) {
+
+  // Date conversion
+  // TODO: Use data type "date" instead of a field name
+  if (key == "date") {
+    
+      var tmp_current_date=new Date(value);
+      var tmp_days_passed = Math.floor( (Date.now() - tmp_current_date.getTime()) / 1000 / 3600 / 24 );
+      
+      if(tmp_days_passed < SHOW_RELATIVE_DATE_IF_CLOSER_THAN_X_DAYS) {
+                
+        // Return relative date
+        // Today
+        if(tmp_days_passed<1) {
+          
+          return tr('Today');
+        }
+        else if(tmp_days_passed==1) {
+          
+          return tr('Yesterday');
+        }
+        else {
+      
+          // Some days ago
+          return tmp_days_passed+' '+tr('days ago');
+        }
+        
+      } 
+      else {
+       
+        // Return full date ISO
+        // TODO: Use user defined date format
+        return tmp_current_date.getFullYear()+'-'+('0'+(tmp_current_date.getMonth()+1)).slice(-2)+'-'+('0'+tmp_current_date.getDate()).slice(-2);
+      }
+  } 
+  // Date conversion
+  
+  
+  // Money conversion
+  // TODO: Use data type "money" instead of a field name
+  if (key == "price") {
+    
+      // TODO: Add currencies, number formatting, dot/comma from translation
+      var tmp_price='$'+Math.floor(value/100)+'.'+('0'+(value%100)).slice(-2);
+      
+      return tmp_price;
+  } 
+  // Money conversion
+  
+  
+  // Nothing to convert
+  return value;
+  
+}
+// Converting data for display
+// ------------------------------------------------------------------------------------------
+
+    
+    
+
+
+
+
+
+</script>    
+</html>
