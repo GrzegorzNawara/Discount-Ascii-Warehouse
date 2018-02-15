@@ -1,0 +1,45 @@
+html {
+  font-size: 87.5%;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 100%;
+  }
+}
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+.face-card {
+  margin-bottom: 3em;
+  width: 220px;
+}
+
+.face-card:hover {
+  background-image: url('images/face-bg.png');
+  background-repeat: no-repeat;
+  background-position: 50% 70%;
+}
+
+.my-ad-card {
+  margin-bottom: 3em;
+  width: 220px;
+}
+
+
+.face-bg {
+  height: 70px;
+  padding:5px;
+}
+
+.container-fluid {
+  background-color: #ffffff;
+  max-width: 960px;
+}
+
+.dummy {  display: none!important; }
+.hidden {  display: none!important; }
+
+body { background-color: #ffffff; }
