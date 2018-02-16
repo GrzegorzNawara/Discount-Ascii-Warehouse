@@ -1,12 +1,18 @@
-"use strict";
-
-const DATA_SET_SEPARATOR="\n";
-const DATA_PAGE_SIZE=24;
-const SHOW_RELATIVE_DATE=7; //Show when the date is closer than X days
-const PRE_LOAD_WHEN_CLOSER_THAN_X_TIMES_THE_PAGE_HEIGHT=10;
-const ADD_ADS_AFTER_EVERY_X_PRODUCTS=20;
+/*jshint esversion: 6 */
+/* jshint undef: true, unused: true */
+/* globals moment: false */
+/* exported moduleDAW */
 
 let moduleDAW = function(){
+
+  "use strict";
+
+  const DATA_SET_SEPARATOR="\n";
+  const DATA_PAGE_SIZE=24;
+  const SHOW_RELATIVE_DATE=7; //Show when the date is closer than X days
+  const PRE_LOAD_WHEN_CLOSER_THAN_X_TIMES_THE_PAGE_HEIGHT=10;
+  const ADD_ADS_AFTER_EVERY_X_PRODUCTS=20;
+
 
   // Simple lock for reading data
   let loadingDataNow=0;
@@ -38,15 +44,17 @@ let moduleDAW = function(){
 
   moment.locale(userLang);
 
+  /*
+  // Replaced with moment.js
   let multiLang=["en","pl"];
-  multiLang["en"]=["__CHECK_TR__","Today","Yesterday","days ago"];
-  multiLang["pl"]=["__TR_PL_OK__","Dziś","Wczoraj","dni temu"];
+  multiLang.en=["__CHECK_TR__","Today","Yesterday","days ago"];
+  multiLang.pl=["__TR_PL_OK__","Dziś","Wczoraj","dni temu"];
 
   function tr(word) {
 
     try {
 
-      return multiLang[userLang][multiLang["en"].indexOf(word)];
+      return multiLang[userLang][multiLang.en.indexOf(word)];
     }
     catch (e) {
 
@@ -55,7 +63,7 @@ let moduleDAW = function(){
   }
   // Basic translation function
   // ------------------------------------------------------------------------------------------
-
+  */
 
 
   // ------------------------------------------------------------------------------------------
@@ -63,7 +71,7 @@ let moduleDAW = function(){
   function sort(element, by_field) {
 
      // Checking the lock
-      if(loadingDataNow==0) {
+      if(loadingDataNow===0) {
 
         let tmp_sorting;
         let tmp_whole_recordset;
@@ -110,8 +118,8 @@ let moduleDAW = function(){
 
   // ------------------------------------------------------------------------------------------
   // Data pre-load
-  document.body.onload = function() {load_more()};
-  window.onscroll = function() {load_more()};
+  document.body.onload = function() {load_more(); };
+  window.onscroll = function() {load_more(); };
 
   function load_more() {
 
@@ -126,7 +134,7 @@ let moduleDAW = function(){
     tmp_pre_loader_distance = document.getElementById("pre-loader").offsetTop - tmp_scroll_position;
 
     // Checking the lock
-    if(loadingDataNow==0 && endOfData==0) {
+    if(loadingDataNow===0 && endOfData===0) {
 
       if ( tmp_pre_loader_distance < PRE_LOAD_WHEN_CLOSER_THAN_X_TIMES_THE_PAGE_HEIGHT*window.innerHeight ) {
 
@@ -173,7 +181,7 @@ let moduleDAW = function(){
 
       //console.log(dataSet[index]);
       // If valid record
-      if(dataSet[index]!="") {
+      if(dataSet[index]!=="") {
 
         let tmp_new_record;
 
@@ -197,7 +205,7 @@ let moduleDAW = function(){
            // Choose an ad
            // Make sure there are never twice the same ad
            tmp_image_id=Math.floor(Math.random()*1000);
-           if(tmp_image_id==lastAdsId) {
+           if(tmp_image_id===lastAdsId) {
 
             tmp_image_id=(tmp_image_id+1)%1000;
            }
@@ -210,7 +218,7 @@ let moduleDAW = function(){
            tmp_new_ad.classList.add("hidden");
 
            // Show ads on first page
-           if(actualPage==0) {
+           if(actualPage===0) {
 
             tmp_new_ad.classList.remove("hidden");
           }
@@ -238,7 +246,7 @@ let moduleDAW = function(){
 
             if (dataRecord.hasOwnProperty(tmp_data_field)) {
 
-                if( document.getElementById("data-"+tmp_data_field) != null ) {
+                if( document.getElementById("data-"+tmp_data_field) !== null ) {
 
                   document.getElementById("data-"+tmp_data_field).innerHTML=dataRecord[tmp_data_field];
                 }
@@ -263,7 +271,7 @@ let moduleDAW = function(){
 
         // Show new record during initial loading
         // Next pages will be shown after scrolling
-        if(actualPage==0) {
+        if(actualPage===0) {
 
           tmp_new_record.classList.remove("hidden");
         }
@@ -279,7 +287,7 @@ let moduleDAW = function(){
 
 
     // Hide/show end-of-catalogue-message
-    if(endOfData==1) {
+    if(endOfData===1) {
 
       document.getElementById("end-of-catalogue-message").style="";
     }
@@ -317,7 +325,7 @@ let moduleDAW = function(){
     document.getElementById("loading-message").style="";
 
     // Use window.fetch with promises when possible
-    if (self.fetch) {
+    if (window.fetch) {
 
         // Run fetch request
 
@@ -333,7 +341,7 @@ let moduleDAW = function(){
             console.log("Fetch used");
             parse_data(responseText);
           })
-          .catch(function(error) {
+          .catch(function() {
 
             //console.log('There has been a problem with your fetch operation: ', error.message);
 
@@ -360,10 +368,11 @@ let moduleDAW = function(){
             load_more();
 
           }, 5000);
-        }
+        };
+
         xhttp.onreadystatechange = function() {
 
-          if (this.readyState == 4 && this.status == 200) {
+          if (this.readyState === 4 && this.status === 200) {
 
             //console.log("XHR used");
             parse_data(this.responseText);
@@ -385,7 +394,7 @@ let moduleDAW = function(){
 
     // Date conversion
     // TODO: Use data type "date" instead of a field name
-    if (key == "date") {
+    if (key === "date") {
 
         let tmp_current_date=new Date(value);
 
@@ -415,7 +424,7 @@ let moduleDAW = function(){
 
             return tr("Today");
           }
-          else if(tmp_days_passed==1) {
+          else if(tmp_days_passed===1) {
 
             return tr("Yesterday");
           }
@@ -439,7 +448,7 @@ let moduleDAW = function(){
 
     // Money conversion
     // TODO: Use data type "money" instead of a field name
-    if (key == "price") {
+    if (key === "price") {
 
         // TODO: Add currencies, number formatting, dot/comma from translation
         let tmp_price="$"+Math.floor(value/100)+"."+("0"+(value%100)).slice(-2);
@@ -457,7 +466,7 @@ let moduleDAW = function(){
   // ------------------------------------------------------------------------------------------
 
 
-  return{sort:sort}
+  return{sort:sort};
 }();
 
 //EOF
