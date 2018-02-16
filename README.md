@@ -1,4 +1,4 @@
-Discount Ascii Warehouse - learning REACT
+Discount Ascii Warehouse - learning REACT!
 ====
 
 Dev notes
